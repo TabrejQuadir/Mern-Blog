@@ -12,7 +12,7 @@ mongoose.connect(process.env.MONGO)
 .then(() => {console.log("Connected")})
 .catch(() => { console.log("Not connected")})
 
-app.listen("4000", () => {console.log("Listening on port 400")})
+app.listen("4000", () => {console.log("Listening on port 4000")})
 
 app.use("/api/user", userRoutes);
 app.use('/api/auth', authRoutes);
