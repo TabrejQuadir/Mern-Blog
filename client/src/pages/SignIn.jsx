@@ -29,12 +29,12 @@ export default function SignIn() {
       if (data.success === false) {
         return setErrorMessage(data.message);
       }
-      setLoading(false);
       if (res.ok) {
         navigate('/');
       }
     } catch (error) {
       setErrorMessage(error.message);
+    }finally{
       setLoading(false);
     }
   };
