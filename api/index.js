@@ -9,8 +9,12 @@ const app = express();
 app.use(express.json());
 
 mongoose.connect(process.env.MONGO)
-.then(() => {console.log("Connected")})
-.catch(() => { console.log("Not connected")})
+  .then(() => {
+    console.log("Connected");
+  })
+  .catch((error) => {
+    console.error("Connection error:", error);
+  });
 
 app.listen("4000", () => {console.log("Listening on port 4000")})
 
