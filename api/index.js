@@ -4,12 +4,43 @@ import dotenv from "dotenv";
 import userRoutes from "./routes/user.route.js";
 import authRoutes from "./routes/auth.route.js";
 import cookieParser from "cookie-parser";
+// import multer from "multer";
+import cors from "cors"
 
 dotenv.config();
 
 const app = express();
 app.use(express.json());
 app.use(cookieParser());
+app.use(cors());
+
+// const storage = multer.diskStorage({
+//   destination: function (req, file, cb) {
+//     cb(null, 'uploads/') // specify the directory where files will be stored
+//   },
+//   filename: function (req, file, cb) {
+//     cb(null, Date.now() + '-' + file.originalname) // generate unique filename
+//   }
+// });
+
+// const upload = multer({ storage: storage });
+
+// app.post('/upload', (req, res, next) => {
+//   upload.single('image')(req, res, function (err) {
+//     if (err instanceof multer.MulterError) {
+//       // A Multer error occurred when uploading.
+//       return res.status(400).json({ success: false, message: err.message });
+//     } else if (err) {
+//       // An unknown error occurred.
+//       return res.status(500).json({ success: false, message: 'Internal Server Error' });
+//     }
+//     // File uploaded successfully.
+//     // Construct the imageUrl based on your server setup.
+//     const imageUrl = `http://localhost:4000/uploads/${req.file.filename}`;
+//     res.json({ success: true, message: 'File uploaded successfully', imageUrl: imageUrl });
+//   });
+// });
+
 
 mongoose.connect(process.env.MONGO)
   .then(() => {
