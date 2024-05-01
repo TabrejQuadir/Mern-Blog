@@ -10,11 +10,7 @@ export const create = async (req, res, next) => {
     }
     const slug = req.body.title
       .split(' ')
-<<<<<<< HEAD
       .join('-')
-=======
-      .join('')
->>>>>>> 946522f3b2a854422211da368690aa1f474d3713
       .toLowerCase()
       .replace(/[^a-zA-Z0-9-]/g, '');
     const newPost = new Post({
