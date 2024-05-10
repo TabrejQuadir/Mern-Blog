@@ -39,3 +39,10 @@ body {
   .dark .post-content a {
     color: red;
   }
+
+
+
+.gradient-text {
+    line-height: 1; /* Adjust line height */
+    padding-bottom: 0.2em; /* Add some bottom padding */
+}
