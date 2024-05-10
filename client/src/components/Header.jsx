@@ -1,17 +1,49 @@
 import { Avatar, Button, Dropdown, Navbar, TextInput } from 'flowbite-react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation,  useNavigate } from 'react-router-dom';
 import { AiOutlineSearch } from "react-icons/ai"
 import { FaMoon, FaSun  } from "react-icons/fa"
 import { useSelector, useDispatch  } from 'react-redux';
 import { toggleTheme } from '../redux/theme/themeSlice';
 import { signoutSuccess } from '../redux/user/userSlice';
+import { useEffect, useState } from 'react';
+import {motion} from "framer-motion"
 
 const Header = () => {
 
+  const navAnime= {
+    hidden:{
+      y:-100,
+      opacity:.7
+    },
+    open:{
+      y:0,
+      opacity:1,
+      transition:{
+        duration:.10,
+        // staggerChildren:.75,
+        type:"spring",
+        damping: 10,
+        stiffness: 100 
+      }
+    }
+  }
+
   const path = useLocation().pathname;
+  const location = useLocation();
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const { currentUser } = useSelector((state) => state.user);
   const { theme } = useSelector((state) => state.theme);
+  const [searchTerm, setSearchTerm] = useState('');
+
+  useEffect(() => {
+    const urlParams = new URLSearchParams(location.search);
+    const searchTermFromUrl = urlParams.get('searchTerm');
+    if (searchTermFromUrl) {
+      setSearchTerm(searchTermFromUrl);
+    }
+  }, [location.search]);
+
 
   const handleSignout = async () => {
     try {
@@ -29,14 +61,24 @@ const Header = () => {
     }
   };
 
+  
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const urlParams = new URLSearchParams(location.search);
+    urlParams.set('searchTerm', searchTerm);
+    const searchQuery = urlParams.toString();
+    navigate(`/search?${searchQuery}`);
+  };
+
 
   return (
-    <Navbar className="border-b-2">
+    <motion.div variants={navAnime} initial="hidden" animate="open">
+    <Navbar className="border-b-2 ">
       <Link to="/" className='self-center whitespace-nowrap text-sm sm:text-lg  font-semibold dark:text-white'>
         <span className='px-2 py-1 bg-gradient-to-tr from-indigo-500 via-purple-500 to-pink-500 rounded-lg text-white'>Tabrej</span>
         Blog
       </Link>
-      <form>
+      <form onSubmit={handleSubmit}>
         <TextInput
           type="text"
           placeholder='Search..'
@@ -101,6 +143,7 @@ const Header = () => {
         </Navbar.Link>
       </Navbar.Collapse>
     </Navbar>
+    </motion.div>
   )
 }
 
