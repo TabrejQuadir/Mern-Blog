@@ -9,9 +9,9 @@ import cookieParser from "cookie-parser";
 import cors from "cors";
 import path from "path"
 
-dotenv.config();
-
 const __dirname = path.resolve();
+
+dotenv.config({ path: path.resolve(__dirname, '../.env') });
 
 const app = express();
 app.use(express.json());
