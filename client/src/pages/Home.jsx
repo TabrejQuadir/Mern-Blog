@@ -18,16 +18,16 @@ export default function Home() {
 
   const headingAinme= {
     hidden:{
-      y:-120,
+      y:-150,
       opacity:.7
     },
     open:{
       y:0,
       opacity:1,
       transition:{
-        delay:0.25,
+        delay:0.50,
         duration:.30,
-        staggerChildren:.75,
+        staggerChildren:1,
         type:"spring",
         damping: 10,
         stiffness: 100 
