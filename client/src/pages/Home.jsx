@@ -41,6 +41,37 @@ export default function Home() {
     stiffness: 300 } }
   };
 
+  const animateFromTop={
+    hidden:{
+      y:-50,
+      opacity:0,
+    },
+    open:{
+      y:0,
+      opacity:1,
+      transition:{
+        delay:0.8
+      }
+    }
+  }
+
+  const postAnimation= {
+    hidden:{
+      // x:-50,
+      scale:.5,
+      opacity:0,
+    },
+    open: (index)=> ({
+      // x:0,
+      scale:1,
+      opacity:1,
+      transition:{
+        delay:0.20 * index
+      }
+    })
+  }
+  
+
   return (
     <div>
       <motion.div variants={headingAinme} initial="hidden" animate="open"  className='flex flex-col gap-6 p-28  max-w-6xl mx-auto '>
@@ -61,12 +92,16 @@ export default function Home() {
       <div className='max-w-6xl mx-auto p-12 flex flex-col gap-8 py-7'>
         {posts && posts.length > 0 && (
           <div className='flex flex-col gap-6'>
-            <motion.h2  className='text-2xl font-semibold text-center'>Recent Posts</motion.h2>
-            <div className='flex flex-wrap gap-4'>
-              {posts.map((post) => (
+            <motion.h2 variants={animateFromTop} initial="hidden" whileInView="open" className='text-2xl font-semibold text-center'>Recent Posts</motion.h2>
+
+            <div  className='flex flex-wrap gap-4'>
+              {posts.map((post, index) => (
+                <motion.div variants={postAnimation} initial="hidden" whileInView="open" viewport={{once:true}} custom={index}> 
                 <PostCard key={post._id} post={post} />
+                </motion.div>
               ))}
             </div>
+
             <Link
               to={'/search'}
               className='text-lg text-teal-500 hover:underline text-center'
